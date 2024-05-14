@@ -20,15 +20,15 @@ class ImportCsvController extends Controller
     public function __invoke(ImportCSVRequest $request): JsonResponse
     {
         try {
-            ($this->service)($request->toDTO());
+            ($this->service)($request->toFile());
 
             return response()->json(
-                ['message' => 'Transaction was successfully made.'],
+                ['message' => 'Import was successfully made.'],
                 Response::HTTP_CREATED,
             );
-        } catch (Throwable) {
+        } catch (Throwable $e) {
             return response()->json(
-                ['message' => 'Something went wrong.'],
+                ['message' => $e->getMessage()],
                 Response::HTTP_INTERNAL_SERVER_ERROR,
             );
         }
