@@ -6,7 +6,7 @@ namespace App\Application\Builder;
 
 use Illuminate\Support\LazyCollection;
 
-readonly class FileReader
+class FileReader
 {
     public function __construct()
     {

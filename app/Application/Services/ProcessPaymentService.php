@@ -16,7 +16,7 @@ class ProcessPaymentService
         private EmailService $emailService,
         private ProcessedPaymentRepositoryInterface $processedPaymentRepository,
         private FailedPaymentRepositoryInterface $failedPaymentRepository,
-    ){
+    ) {
     }
 
     public function __invoke(array $paymentArray): void
@@ -31,6 +31,7 @@ class ProcessPaymentService
         $paymentCollection->each(
             function (PaymentEntity $payment) {
                 $invoice = $this->generateInvoice($payment);
+
                 try {
                     $this->emailService->send($invoice, $payment);
                     $this->processedPaymentRepository->store($payment);

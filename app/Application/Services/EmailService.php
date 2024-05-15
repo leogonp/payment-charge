@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Services;
 
-use App\Domain\Collections\PaymentCollection;
 use App\Domain\Entities\PaymentEntity;
 
 class EmailService
