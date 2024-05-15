@@ -12,10 +12,14 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('imported_files', function (Blueprint $table) {
+        Schema::create('processed_payments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('size');
+            $table->string('government_id');
+            $table->string('email');
+            $table->string('debt_amount');
+            $table->string('debt_due_date');
+            $table->string('debt_id');
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('imported_files');
+        Schema::dropIfExists('processed_payments');
     }
 };

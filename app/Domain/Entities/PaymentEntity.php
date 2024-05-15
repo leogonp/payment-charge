@@ -38,7 +38,7 @@ readonly class PaymentEntity
             'government_id' => $this->governmentId,
             'email' => $this->email,
             'debt_amount' => $this->debtAmount,
-            'debt_due_date' => $this->debtDueDate,
+            'debt_due_date' => $this->debtDueDate->format('Y-m-d'),
             'debt_id' => (string) $this->debtId,
         ];
     }

@@ -18,8 +18,7 @@ class ImportCSVService
         private ImportedFilesRepositoryInterface $repository,
         private PaymentArrayBuilder $paymentArrayBuilder,
         private Producer $producer,
-    )
-    {
+    ) {
     }
 
     public function __invoke(UploadedFile $file): void

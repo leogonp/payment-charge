@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Services\ImportCSVService;
@@ -11,7 +13,6 @@ use Throwable;
 
 class ImportCsvController extends Controller
 {
-
     public function __construct(
         private readonly ImportCSVService $service
     ) {
@@ -33,5 +34,4 @@ class ImportCsvController extends Controller
             );
         }
     }
-
 }
