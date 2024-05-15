@@ -12,6 +12,8 @@ use Illuminate\Http\UploadedFile;
 
 class ImportCSVService
 {
+    private const BATCH_SIZE = 1000;
+
     public function __construct(
         private ImportedFilesRepositoryInterface $repository,
         private PaymentArrayBuilder $paymentArrayBuilder,
@@ -31,8 +33,7 @@ class ImportCSVService
 
         $paymentCollection = $this->paymentArrayBuilder->makeToBulk($file);
 
-        $batchSize = 1000;
-        $batches = $paymentCollection->chunk($batchSize);
+        $batches = $paymentCollection->chunk(static::BATCH_SIZE);
 
         foreach ($batches as $batch) {
             $batchJsonData = $batch->map(fn ($payment) => $payment->toArray())->toJson();

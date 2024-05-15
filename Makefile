@@ -14,6 +14,7 @@ docker-install:
 	make docker-composer-install
 	make docker-migrate
 	make docker-clear
+	make docker-npm-install
 
 docker-up:
 	$(COMMAND) up -d
@@ -69,3 +70,6 @@ docker-format: docker-up
 docker-lint-fix:
 	make docker-up
 	docker exec -t $(CONTAINER_NAME) composer lint-fix
+
+docker-npm-install:
+	docker exec -t $(CONTAINER_NAME) npm i
