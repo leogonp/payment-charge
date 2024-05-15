@@ -11,6 +11,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "friendsofphp/php-cs-fixer": "^3.57",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
@@ -40,6 +41,11 @@
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+        "unit-test": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -d memory_limit=-1 vendor/bin/phpunit --testdox --no-coverage --testsuite Feature,Unit"
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",

@@ -8,7 +8,7 @@ use App\Domain\Collections\PaymentCollection;
 use App\Domain\Entities\PaymentEntity;
 use Illuminate\Http\UploadedFile;
 
-readonly class PaymentArrayBuilder
+class PaymentArrayBuilder
 {
     public function __construct(
         private FileReader $fileReader,

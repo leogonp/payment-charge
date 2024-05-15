@@ -18,19 +18,11 @@ class ImportCSVService
         private ImportedFilesRepositoryInterface $repository,
         private PaymentArrayBuilder $paymentArrayBuilder,
         private Producer $producer,
-    )
-    {
+    ) {
     }
 
     public function __invoke(UploadedFile $file): void
     {
-        $this->repository->store(
-            ImportedFileEntity::fromArray([
-                'name' => $file->getClientOriginalName(),
-                'size' => $file->getSize(),
-            ])
-        );
-
         $paymentCollection = $this->paymentArrayBuilder->makeToBulk($file);
 
         $batches = $paymentCollection->chunk(static::BATCH_SIZE);
@@ -40,5 +32,12 @@ class ImportCSVService
 
             $this->producer->produce($batchJsonData);
         }
+
+        $this->repository->store(
+            ImportedFileEntity::fromArray([
+                'name' => $file->getClientOriginalName(),
+                'size' => $file->getSize(),
+            ])
+        );
     }
 }

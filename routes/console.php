@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
+declare(strict_types=1);
+
+use App\Infrastructure\Command\ProcessPaymentsCommand;
 use Illuminate\Support\Facades\Artisan;
 
 Artisan::command('process-payments', function () {
-    $this->comment(Inspiring::quote());
+    app(ProcessPaymentsCommand::class)->handle();
 });
