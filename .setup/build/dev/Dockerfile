@@ -32,6 +32,8 @@ RUN apk add --no-cache \
     libc-dev \
     gcc \
     g++ \
+    nodejs \
+    npm \
     autoconf
 
 RUN pecl install redis xdebug \
@@ -62,6 +64,10 @@ RUN pecl install rdkafka-6.0.3 \
      && docker-php-ext-enable rdkafka
 
 RUN apk del make musl-dev libc-dev gcc g++ autoconf bash
+
+#RUN apk add --no-cache supervisor
+
+#COPY .setup/build/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN echo 'net.ipv4.ip_local_port_range = 12000 65535' >> /etc/sysctl.conf
 RUN echo 'fs.file-max = 1048576' >> /etc/sysctl.conf

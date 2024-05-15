@@ -6,26 +6,21 @@ namespace App\Infrastructure\Http\Controllers\Request;
 
 use App\Application\DTO\MakeTransactionInputDTO;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 
 class ImportCSVRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'payer' => ['required', 'int'],
-            'payee' => ['required', 'int'],
-            'value' => ['required', 'numeric', 'gt:0'],
+            'file' => ['required', 'file'],
         ];
     }
 
-    public function toDTO(): MakeTransactionInputDTO
+    public function toFile(): UploadedFile
     {
         $data = $this->validated();
 
-        return MakeTransactionInputDTO::fromArray([
-            'payer_user_id' => $data['payer'],
-            'payee_user_id' => $data['payee'],
-            'value' => $data['value'],
-        ]);
+        return $data['file'];
     }
 }
