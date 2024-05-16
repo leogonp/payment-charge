@@ -36,6 +36,10 @@ Se tudo ocorrer com sucesso, a resposta terá com código http 201 e uma mensage
         "message": "Import was successfully made."
     }
 
+## Aplicação
+
+A aplicação frontend roda na pasta raiz da porta 8080.
+
 ## Portas:
 
 - Aplicação roda na porta 8080
