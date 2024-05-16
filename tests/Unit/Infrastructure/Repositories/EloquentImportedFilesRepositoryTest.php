@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Repositories;
 
+use App\Domain\Collections\ImportedFilesCollection;
 use App\Domain\Entities\ImportedFileEntity;
 use App\Infrastructure\Models\ImportedFiles;
 use App\Infrastructure\Repositories\EloquentImportedFilesRepository;
@@ -36,5 +37,34 @@ class EloquentImportedFilesRepositoryTest extends TestCase
             ->with($entity->toArray());
 
         $this->assertNull($this->repository->store($entity));
+    }
+
+    public function testShouldGetAllCorrectly(): void
+    {
+        $data = [
+            [
+                'name' => 'file1',
+                'size' => 123,
+            ],
+            [
+                'name' => 'file2',
+                'size' => 456,
+            ],
+            [
+                'name' => 'file3',
+                'size' => 789,
+            ],
+        ];
+
+
+        $this->model
+            ->shouldReceive('get->toArray')
+            ->once()
+            ->andReturn($data);
+
+        $collection = $this->repository->getAll();
+
+        $this->assertInstanceOf(ImportedFilesCollection::class, $collection);
+        $this->assertCount(3, $collection);
     }
 }

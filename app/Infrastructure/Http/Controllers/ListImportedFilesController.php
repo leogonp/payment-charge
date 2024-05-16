@@ -4,28 +4,27 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controllers;
 
-use App\Application\Services\ImportCSVService;
-use App\Infrastructure\Http\Controllers\Request\ImportCSVRequest;
+use App\Application\Services\ListImportedFilesService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-class ImportCsvController extends Controller
+class ListImportedFilesController extends Controller
 {
     public function __construct(
-        private readonly ImportCSVService $service
+        private readonly ListImportedFilesService $service
     ) {
     }
 
-    public function __invoke(ImportCSVRequest $request): JsonResponse
+    public function __invoke(): JsonResponse
     {
         try {
-            ($this->service)($request->toFile());
+            $files = ($this->service)();
 
             return response()->json(
-                ['message' => 'Import was successfully made.'],
-                Response::HTTP_CREATED,
+                $files->toArray(),
+                Response::HTTP_OK,
             );
         } catch (Throwable $e) {
             return response()->json(

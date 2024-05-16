@@ -52,7 +52,7 @@ class ImportCsvControllerTest extends TestCase
         $this->assertEquals('Import was successfully made.', json_decode($response->getContent(), true)['message']);
     }
 
-    public function testWillThrownExceptionResponseOnFailure()
+    public function testWillThrownExceptionResponseOnFailure(): void
     {
         $this->service
             ->shouldReceive('__invoke')
