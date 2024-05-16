@@ -6,6 +6,7 @@ namespace Tests\Unit\Application\Builder;
 
 use App\Application\Builder\FileReader;
 use App\Application\Builder\PaymentArrayBuilder;
+use App\Application\Exceptions\InvalidCsvException;
 use App\Domain\Collections\PaymentCollection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\LazyCollection;
@@ -13,7 +14,7 @@ use Tests\TestCase;
 
 class PaymentArrayBuilderTest extends TestCase
 {
-    public function testMakeToBulk(): void
+    public function testMakeToBulkSuccessfully(): void
     {
         $fileReaderMock = $this->mock(FileReader::class);
 
@@ -49,5 +50,30 @@ class PaymentArrayBuilderTest extends TestCase
         $this->assertEquals(75.20, $paymentCollection[1]->debtAmount);
         $this->assertEquals('2024-05-20', $paymentCollection[1]->debtDueDate->format('Y-m-d'));
         $this->assertEquals('e72dde81-3185-469f-b812-c5fafe8acd6d', (string) $paymentCollection[1]->debtId);
+    }
+
+    public function testWillFailToMakeToBulkWithInvalidCSV(): void
+    {
+        $fileReaderMock = $this->mock(FileReader::class);
+
+        $csvData = new LazyCollection([
+            ['a', 'b', 'c', 'd', 'e', 'f'],
+            ['dsadsa', '123456789', '32132d@dsadsads.com', 100.50, '2024-06-01'],
+            ['dsadsddsa', '987654321', 'dsadsa@dsadsadsa.com', 75.20, '2024-05-20'],
+        ]);
+
+        $fileReaderMock->shouldReceive('readCsvFile')
+            ->once()
+            ->andReturn($csvData);
+
+        $paymentArrayBuilder = app(PaymentArrayBuilder::class);
+
+        $uploadedFile = UploadedFile::fake()->create('payments.csv');
+
+        $this->expectException(InvalidCsvException::class);
+        $this->expectExceptionCode(422);
+        $this->expectExceptionMessage('Invalid CSV format');
+
+        $paymentArrayBuilder->makeToBulk($uploadedFile);
     }
 }

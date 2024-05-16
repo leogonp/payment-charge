@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Service;
+namespace Tests\Unit\Application\Service;
 
 use App\Application\Builder\PaymentArrayBuilder;
 use App\Application\Services\ImportCSVService;

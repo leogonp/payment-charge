@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Infrastructure\Repositories;
+namespace Tests\Unit\Infrastructure\Repositories;
 
 use App\Domain\Entities\PaymentEntity;
 use App\Domain\ValueObjects\UUID;

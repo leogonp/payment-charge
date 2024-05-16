@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Service;
+namespace Tests\Unit\Application\Service;
 
 use App\Application\Services\EmailService;
 use App\Application\Services\ProcessPaymentService;

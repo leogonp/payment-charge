@@ -30,7 +30,7 @@ class ImportCsvController extends Controller
         } catch (Throwable $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
-                Response::HTTP_INTERNAL_SERVER_ERROR,
+                $e->getCode() ?: Response::HTTP_INTERNAL_SERVER_ERROR,
             );
         }
     }
