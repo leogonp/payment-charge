@@ -12,7 +12,7 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('´failed_payments', function (Blueprint $table) {
+        Schema::create('failed_payments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('government_id');

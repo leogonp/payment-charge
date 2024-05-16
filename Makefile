@@ -14,7 +14,6 @@ docker-install:
 	make docker-composer-install
 	make docker-migrate
 	make docker-clear
-	make docker-npm-install
 
 docker-up:
 	$(COMMAND) up -d
